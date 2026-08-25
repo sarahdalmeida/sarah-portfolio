@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import codeEqualizeImage from "./assets/code-equalize.png";
 import interviewPrepImage from "./assets/interviewprep-ai.png";
 import learnifyImage from "./assets/learnify.png";
+import resendIcon from "./assets/resend_icon.png";
 import { FiArrowDownRight, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import {
   FaHtml5,
@@ -948,13 +949,20 @@ function App() {
                 >
                   {isSending ? "Sending..." : "Send Message"}
                 </button>
+
                 <div className="mt-3 flex justify-end">
-                  <span className="inline-flex items-center rounded-full border border-[var(--border)] bg-[rgba(11,17,32,0.6)] px-3 py-1 text-[10px] font-medium tracking-wide text-[var(--secondary-text)]">
-                    Powered by{" "}
-                    <span className="ml-1 font-semibold text-white">
-                      Resend
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[rgba(11,17,32,0.6)] px-3 py-1.5">
+                    <img
+                      src={resendIcon}
+                      alt="Resend"
+                      className="h-4 w-4 object-contain mix-blend-screen"
+                    />
+
+                    <span className="text-[10px] font-medium tracking-wide text-[var(--secondary-text)]">
+                      Powered by{" "}
+                      <span className="font-semibold text-white">Resend</span>
                     </span>
-                  </span>
+                  </div>
                 </div>
               </div>
             </form>
