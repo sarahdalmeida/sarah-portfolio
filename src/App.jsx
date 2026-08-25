@@ -948,6 +948,14 @@ function App() {
                 >
                   {isSending ? "Sending..." : "Send Message"}
                 </button>
+                <div className="mt-3 flex justify-end">
+                  <span className="inline-flex items-center rounded-full border border-[var(--border)] bg-[rgba(11,17,32,0.6)] px-3 py-1 text-[10px] font-medium tracking-wide text-[var(--secondary-text)]">
+                    Powered by{" "}
+                    <span className="ml-1 font-semibold text-white">
+                      Resend
+                    </span>
+                  </span>
+                </div>
               </div>
             </form>
           </Reveal>
