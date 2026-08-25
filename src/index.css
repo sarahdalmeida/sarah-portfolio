@@ -1,0 +1,141 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Sora:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --background: #0b1120;
+  --surface: #141b2e;
+  --primary-text: #ffffff;
+  --secondary-text: #a8b0c4;
+  --border: #232b42;
+  --accent: #3e7bfa;
+  --accent-secondary: #a78bfa;
+  --success: #6ee7b7;
+  --accent-pink: #ff3d8a;
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.24);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(62, 123, 250, 0.12),
+      transparent 24%
+    ),
+    var(--background);
+  color: var(--primary-text);
+  font-family: "Inter", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(62, 123, 250, 0.35);
+  color: white;
+}
+
+.brand-logo {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Sora", system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: white;
+  padding-bottom: 10px;
+  min-width: fit-content;
+  white-space: nowrap;
+}
+
+.brand-logo::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 55%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 999px;
+}
+
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  body {
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(62, 123, 250, 0.1),
+        transparent 28%
+      ),
+      var(--background);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
