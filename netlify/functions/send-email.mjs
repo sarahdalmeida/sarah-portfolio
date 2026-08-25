@@ -34,7 +34,7 @@ export default async (req) => {
       },
       body: JSON.stringify({
         from: "Portfolio <onboarding@resend.dev>",
-        to: ["dalmeidasarah2@gmail.com"],
+        to: [process.env.CONTACT_EMAIL],        
         subject: `New portfolio message from ${name}`,
         reply_to: email,
         text: `Name: ${name}
