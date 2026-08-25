@@ -136,7 +136,7 @@ const certifications = [
   {
     title: "AI Literacy",
     issuer: "IBM SkillsBuild",
-    logo: "/src/assets/ibm_logo.png",
+    logo: "/assets/ibm_logo.png",
     date: "February 2026",
     description:
       "Foundational understanding of AI concepts, applications, and responsible use of artificial intelligence.",
@@ -148,7 +148,7 @@ const certifications = [
   {
     title: "Databricks Fundamentals Accreditation",
     issuer: "Databricks Academy",
-    logo: "/src/assets/databricks_logo.png",
+    logo: "/assets/databricks_logo.png",
     date: "August 2026",
     description:
       "Foundational understanding of Databricks and its data and AI platform.",
@@ -160,7 +160,7 @@ const certifications = [
   {
     title: "Claude 101 – Foundations of Effective AI Interaction",
     issuer: "Anthropic",
-    logo: "/src/assets/Anthropic_logo.png",
+    logo: "/assets/Anthropic_logo.png",
     date: "August 2026",
     description:
       "Foundational training in effective AI interaction and working with Claude.",
@@ -172,7 +172,7 @@ const certifications = [
   {
     title: "Claude Code 101 – AI-Assisted Software Development",
     issuer: "Anthropic",
-    logo: "/src/assets/Anthropic_logo.png",
+    logo: "assets/Anthropic_logo.png",
     date: "August 2026",
     description:
       "Foundational training in AI-assisted software development and using Claude Code to support the development workflow.",
@@ -653,7 +653,7 @@ function App() {
                   </div>
                   <div className="flex items-center gap-3 text-sm font-medium text-[var(--secondary-text)]">
                     <img
-                      src="/src/assets/VTU_logo.png"
+                      src="/assets/VTU_logo.png"
                       alt="Visvesvaraya Technological University logo"
                       className="h-8 w-8 object-contain"
                     />
