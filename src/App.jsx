@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 import codeEqualizeImage from "./assets/code-equalize.webp";
 import interviewPrepImage from "./assets/interviewprep-ai.webp";
 import learnifyImage from "./assets/learnify.webp";
@@ -1015,18 +1014,43 @@ function App() {
 }
 
 function Reveal({ children, className = "" }) {
-  const reduceMotion = useReducedMotion();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) {
+      element.classList.add("reveal-visible");
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          element.classList.add("reveal-visible");
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.18,
+      },
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className={className}
-    >
+    <div ref={ref} className={`reveal ${className}`}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 

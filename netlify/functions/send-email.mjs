@@ -1,14 +1,11 @@
 export default async (req) => {
   if (req.method !== "POST") {
-    return new Response(
-      JSON.stringify({ error: "Method not allowed" }),
-      {
-        status: 405,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   }
 
   try {
@@ -25,6 +22,12 @@ export default async (req) => {
         },
       );
     }
+    console.log(
+      "RESEND_API_KEY loaded:",
+      process.env.RESEND_API_KEY
+        ? `${process.env.RESEND_API_KEY.slice(0, 6)}...`
+        : "MISSING",
+    );
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -34,7 +37,7 @@ export default async (req) => {
       },
       body: JSON.stringify({
         from: "Portfolio <onboarding@resend.dev>",
-        to: [process.env.CONTACT_EMAIL],        
+        to: [process.env.CONTACT_EMAIL],
         subject: `New portfolio message from ${name}`,
         reply_to: email,
         text: `Name: ${name}
@@ -62,26 +65,20 @@ ${message}`,
       );
     }
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   } catch (error) {
     console.error("Contact form error:", error);
 
-    return new Response(
-      JSON.stringify({ error: "Something went wrong." }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return new Response(JSON.stringify({ error: "Something went wrong." }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   }
 };
