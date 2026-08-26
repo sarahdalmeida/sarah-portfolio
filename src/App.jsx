@@ -5,6 +5,8 @@ import codeEqualizeImage from "./assets/code-equalize.png";
 import interviewPrepImage from "./assets/interviewprep-ai.png";
 import learnifyImage from "./assets/learnify.png";
 import resendIcon from "./assets/resend_icon.png";
+import React, {useMemo, useRef} from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
 import { FiArrowDownRight, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import {
   FaHtml5,
@@ -58,7 +60,7 @@ const skillGroups = [
     title: "Backend",
     items: [
       { name: "Node.js", icon: FaNodeJs, color: "#339933" },
-      { name: "Express.js", icon: SiExpress, color: "#FFFFFF" },
+      { name: "Express.js", icon: SiExpress, color: "#000000" },
     ],
   },
 
@@ -71,8 +73,8 @@ const skillGroups = [
     title: "Tools",
     items: [
       { name: "Git", icon: FaGitAlt, color: "#F05032" },
-      { name: "GitHub", icon: FaGithub, color: "#FFFFFF" },
-      { name: "GitHub Copilot", icon: SiGithubcopilot, color: "#FFFFFF" },
+      { name: "GitHub", icon: FaGithub, color: "#000000" },
+      { name: "GitHub Copilot", icon: SiGithubcopilot, color: "#000000" },
       { name: "VS Code", icon: VscVscode, color: "#007ACC" },
     ],
   },
@@ -189,6 +191,15 @@ const certificationSlides = [
 ];
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("light", theme === "light");
+
+    localStorage.setItem("theme", theme);
+  }, [theme]);
   const [activeSection, setActiveSection] = useState("hero");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [projectIndex, setProjectIndex] = useState(0);
@@ -196,6 +207,7 @@ function App() {
 
   const currentProject = projectEntries[projectIndex];
   const currentCertification = certifications[certificationIndex];
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -390,6 +402,27 @@ function App() {
                 <span className="link-underline">{item.label}</span>
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setTheme((currentTheme) =>
+                  currentTheme === "dark" ? "light" : "dark",
+                );
+              }}
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
+              title={
+                theme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
+              className="ml-4 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--primary-text)] transition-all duration-200 hover:scale-105"
+            >
+              {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
+            </button>
           </nav>
         </div>
         <div
@@ -654,7 +687,7 @@ function App() {
                   </div>
                   <div className="flex items-center gap-3 text-sm font-medium text-[var(--secondary-text)]">
                     <img
-                      src="/assets/VTU_logo.png"
+                      src="/assets/vtu_logo.png"
                       alt="Visvesvaraya Technological University logo"
                       className="h-8 w-8 object-contain"
                     />
@@ -698,8 +731,6 @@ function App() {
             >
               ←
             </button>
-            {/* Certification Card */}
-            {/* Certification Cards */}
             <div
               key={certificationIndex}
               className="animate-[slideIn_250ms_ease-out] grid gap-5 md:grid-cols-3"
@@ -709,7 +740,6 @@ function App() {
                   key={certification.title}
                   className="flex h-[38 0px] flex-col overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] p-5 transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-[0_12px_35px_-20px_rgba(62,123,250,0.8)]"
                 >
-                  {/* Issuer */}
                   <div className="flex items-center gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white p-1.5">
                       <img
@@ -724,24 +754,21 @@ function App() {
                     </span>
                   </div>
 
-                  {/* Certification name */}
+
                   <h3 className="mt-4 text-xl font-semibold leading-7 text-white">
                     {certification.title}
                   </h3>
 
-                  {/* Date */}
                   <div className="mt-2 text-sm text-[var(--secondary-text)]">
                     Issued on: {certification.date}
                   </div>
 
-                  {/* Description */}
                   {certification.description && (
                     <p className="mt-4 text-sm leading-6 text-[var(--secondary-text)]">
                       {certification.description}
                     </p>
                   )}
 
-                  {/* Buttons */}
                   <div className="mt-auto flex flex-wrap gap-3 pt-6">
                     {certification.pdfUrl && (
                       <a
