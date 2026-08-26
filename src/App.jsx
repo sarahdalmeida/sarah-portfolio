@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import Lenis from "lenis";
 import codeEqualizeImage from "./assets/code-equalize.webp";
 import interviewPrepImage from "./assets/interviewprep-ai.webp";
 import learnifyImage from "./assets/learnify.webp";
@@ -218,20 +217,6 @@ function App() {
   const [isSuccessFadingOut, setIsSuccessFadingOut] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      smoothWheel: true,
-      smoothTouch: false,
-    });
-
-    let frame = 0;
-    const raf = (time) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-
-    frame = requestAnimationFrame(raf);
-
     const onScroll = () => {
       const maxScroll =
         document.documentElement.scrollHeight - window.innerHeight;
@@ -259,10 +244,8 @@ function App() {
     window.addEventListener("scroll", onScroll);
 
     return () => {
-      cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
-      lenis.destroy();
     };
   }, []);
 
