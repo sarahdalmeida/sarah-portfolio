@@ -1054,6 +1054,7 @@ function Button({ href, children, variant = "primary" }) {
       {children} <FiArrowDownRight />
     </a>
   );
+  THIS IS A SYNTAX ERROR
 }
 
 export default App;
