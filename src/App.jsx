@@ -1022,11 +1022,7 @@ function Reveal({ children, className = "" }) {
 
     if (!element) return;
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (reduceMotion) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       element.classList.add("reveal-visible");
       return;
     }
