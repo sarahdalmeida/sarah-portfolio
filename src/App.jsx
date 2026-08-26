@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Lenis from "lenis";
-import codeEqualizeImage from "./assets/code-equalize.png";
-import interviewPrepImage from "./assets/interviewprep-ai.png";
-import learnifyImage from "./assets/learnify.png";
+import codeEqualizeImage from "./assets/code-equalize.webp";
+import interviewPrepImage from "./assets/interviewprep-ai.webp";
+import learnifyImage from "./assets/learnify.webp";
 import resendIcon from "./assets/resend_icon.png";
-import React, {useMemo, useRef} from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { FiArrowDownRight, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FiArrowDownRight, FiGithub } from "react-icons/fi";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -689,6 +688,8 @@ function App() {
                     <img
                       src="/assets/vtu_logo.png"
                       alt="Visvesvaraya Technological University logo"
+                      loading="lazy"
+                      decoding="async"
                       className="h-8 w-8 object-contain"
                     />
                     <span>
@@ -745,6 +746,8 @@ function App() {
                       <img
                         src={certification.logo}
                         alt={`${certification.issuer} logo`}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-contain"
                       />
                     </div>
@@ -753,7 +756,6 @@ function App() {
                       {certification.issuer}
                     </span>
                   </div>
-
 
                   <h3 className="mt-4 text-xl font-semibold leading-7 text-white">
                     {certification.title}
