@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import codeEqualizeImage from "./assets/code-equalize.webp";
 import interviewPrepImage from "./assets/interviewprep-ai.webp";
 import learnifyImage from "./assets/learnify.webp";
-import resendIcon from "./assets/resend_icon.png";
+import resendIcon from "./assets/resend_icon.webp";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { FiArrowDownRight, FiGithub } from "react-icons/fi";
 import {
@@ -668,7 +668,7 @@ function App() {
                   </div>
                   <div className="flex items-center gap-3 text-sm font-medium text-[var(--secondary-text)]">
                     <img
-                      src="/assets/vtu_logo.png"
+                      src="/assets/vtu_logo.webp"
                       alt="Visvesvaraya Technological University logo"
                       loading="lazy"
                       decoding="async"
