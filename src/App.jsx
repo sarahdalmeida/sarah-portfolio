@@ -4,7 +4,7 @@ import interviewPrepImage from "./assets/interviewprep-ai.webp";
 import learnifyImage from "./assets/learnify.webp";
 import vtuLogo from "./assets/vtu_logo.webp";
 import resendIcon from "./assets/resend_icon.webp";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import { FiArrowDownRight, FiGithub } from "react-icons/fi";
 import {
   FaHtml5,
@@ -192,6 +192,7 @@ function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
@@ -356,6 +357,7 @@ function App() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
           <a
             href="#hero"
+            onClick={() => setMobileMenuOpen(false)}
             className="brand-logo text-white"
             aria-label="Sarah D'Almeida home"
           >
@@ -384,6 +386,7 @@ function App() {
                 <span className="link-underline">{item.label}</span>
               </a>
             ))}
+
             <button
               type="button"
               onClick={() => {
@@ -406,10 +409,78 @@ function App() {
               {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
             </button>
           </nav>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label={
+              mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
+            aria-expanded={mobileMenuOpen}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--primary-text)] transition-all duration-200 hover:scale-105 md:hidden"
+          >
+            {mobileMenuOpen ? <FaTimes size={17} /> : <FaBars size={17} />}
+          </button>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="border-t border-[var(--border)] bg-[rgba(11,17,32,0.98)] px-4 py-4 backdrop-blur-[12px] md:hidden">
+            <nav aria-label="Mobile Primary" className="flex flex-col">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-current={
+                    activeSection === item.href.replace("#", "")
+                      ? "page"
+                      : undefined
+                  }
+                  className={`border-b border-[var(--border)] py-3 text-sm transition-colors duration-200 ${
+                    activeSection === item.href.replace("#", "")
+                      ? "font-bold text-white"
+                      : "font-normal text-[var(--secondary-text)] hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setTheme((currentTheme) =>
+                    currentTheme === "dark" ? "light" : "dark",
+                  );
+                }}
+                aria-label={
+                  theme === "dark"
+                    ? "Switch to light mode"
+                    : "Switch to dark mode"
+                }
+                className="mt-3 flex items-center gap-3 rounded-[10px] border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--primary-text)] transition-all duration-200"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <FaSun size={16} />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <FaMoon size={16} />
+                    <span>Dark Mode</span>
+                  </>
+                )}
+              </button>
+            </nav>
+          </div>
+        )}
+
         <div
           className="h-px w-full bg-[var(--accent)] transition-transform duration-200"
-          style={{ transform: `scaleX(${Math.max(scrollProgress, 0.02)})` }}
+          style={{
+            transform: `scaleX(${Math.max(scrollProgress, 0.02)})`,
+          }}
         />
       </header>
 
