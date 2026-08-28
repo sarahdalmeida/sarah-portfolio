@@ -173,7 +173,7 @@ const certifications = [
   {
     title: "Claude Code 101 – AI-Assisted Software Development",
     issuer: "Anthropic",
-    logo: "assets/Anthropic_logo.png",
+    logo: "/assets/Anthropic_logo.png",
     date: "August 2026",
     description:
       "Foundational training in AI-assisted software development and using Claude Code to support the development workflow.",
@@ -193,6 +193,8 @@ function App() {
     return localStorage.getItem("theme") || "dark";
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const [showAllCertifications, setShowAllCertifications] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", theme === "light");
@@ -201,10 +203,7 @@ function App() {
   }, [theme]);
   const [activeSection, setActiveSection] = useState("hero");
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [projectIndex, setProjectIndex] = useState(0);
   const [certificationIndex, setCertificationIndex] = useState(0);
-
-  const currentProject = projectEntries[projectIndex];
   const currentCertification = certifications[certificationIndex];
 
   const [formData, setFormData] = useState({
@@ -626,7 +625,8 @@ function App() {
             />
           </div>
 
-          <div className="relative mx-auto mt-8 px-12 w-full">
+          <div className="relative mx-auto mt-8 w-full md:px-12">
+            {" "}
             {/* Left Arrow */}
             <button
               type="button"
@@ -637,15 +637,14 @@ function App() {
                 });
               }}
               aria-label="Previous projects"
-              className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-xl text-white shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="absolute left-0 top-1/2 z-10 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-xl text-[var(--primary-text)] shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] md:flex"
             >
               ←
             </button>
-
             {/* Carousel */}
             <div
               id="projects-carousel"
-              className="flex flex-col gap-6 lg:flex-row lg:gap-6 px-1 pb-4"
+              className="hidden flex-col gap-6 pb-4 md:flex lg:flex-row"
             >
               {projectEntries.map((project) => (
                 <Reveal
@@ -701,7 +700,67 @@ function App() {
                 </Reveal>
               ))}
             </div>
-
+           
+            {/* Mobile projects: stacked full-width cards, no arrows. */}
+            <div className="-mx-4 flex flex-col gap-6 px-4 pb-4 md:hidden">
+              {projectEntries
+                .slice(0, showAllProjects ? projectEntries.length : 3)
+                .map((project) => (
+                  <Reveal
+                    key={project.name}
+                    className="w-full overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] transition-all duration-200"
+                  >
+                    <div className="flex h-[260px] items-center justify-center overflow-hidden border-b border-[var(--border)] bg-[#0b1018]">
+                      <img
+                        src={project.image}
+                        alt={`${project.name} project screenshot`}
+                        className="h-full w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="flex min-h-[290px] flex-col p-5">
+                      <div className="mb-2 text-xs uppercase tracking-[0.24em] text-[var(--success)]">
+                        {project.status}
+                      </div>
+                      <h3 className="text-xl font-semibold text-white">
+                        {project.name}
+                      </h3>
+                      <p className="mt-5 min-h-[150px] text-sm leading-6 text-[var(--secondary-text)]">
+                        {project.description}
+                      </p>
+                      <div className="mt-5 flex h-[112px] flex-wrap content-start gap-2">
+                        {project.stack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-[999px] border border-[var(--border)] px-3 py-1 text-xs text-[var(--secondary-text)]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="mt-auto pt-5">
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-[8px] border border-[var(--border)] px-3 py-2 text-sm text-white transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                        >
+                          GitHub <FiGithub />
+                        </a>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+            </div>
+            <div className="mt-2 flex justify-end md:hidden">
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 rounded-[8px] border border-[#F59E0B] bg-[#F59E0B] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#D97706]"
+              >
+                View More Projects →
+              </button>
+            </div>
             {/* Right Arrow */}
             <button
               type="button"
@@ -712,7 +771,7 @@ function App() {
                 });
               }}
               aria-label="Next projects"
-              className="absolute right-0 top-1/2 z-10 flex h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-xl text-white shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="absolute right-0 top-1/2 z-10 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-xl text-[var(--primary-text)] shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] md:flex"
             >
               →
             </button>
@@ -770,7 +829,7 @@ function App() {
             description="Courses and credentials I've completed."
           />
 
-          <div className="relative mx-auto mt-8 max-w-5xl px-2 sm:px-8 md:px-12">
+          <div className="relative mx-auto mt-8 max-w-5xl px-0 sm:px-8 md:px-12">
             {" "}
             {/* Left Arrow */}
             <button
@@ -782,75 +841,149 @@ function App() {
                 )
               }
               aria-label="Previous certification"
-              className="absolute left-[-0.5rem] sm:left-[-2.5rem] top-1/2 z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-lg text-white shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="absolute left-[-0.5rem] sm:left-[-2.5rem] top-1/2 z-10 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-lg text-[var(--primary-text)] shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] md:flex"
             >
               ←
             </button>
             <div
               key={certificationIndex}
-              className="animate-[slideIn_250ms_ease-out] grid gap-5 md:grid-cols-3"
+              className="animate-[slideIn_250ms_ease-out]"
             >
-              {certificationSlides[certificationIndex].map((certification) => (
-                <div
-                  key={certification.title}
-                  className="flex h-[38 0px] flex-col overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] p-5 transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-[0_12px_35px_-20px_rgba(62,123,250,0.8)]"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white p-1.5">
-                      <img
-                        src={certification.logo}
-                        alt={`${certification.issuer} logo`}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-contain"
-                      />
+              <div className="hidden md:grid md:grid-cols-3 md:gap-5">
+                {certificationSlides[certificationIndex].map(
+                  (certification) => (
+                    <div
+                      key={certification.title}
+                      className="flex min-h-[380px] flex-col overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] p-5 transition-all duration-200 hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-[0_12px_35px_-20px_rgba(62,123,250,0.8)]"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white p-1.5">
+                          <img
+                            src={certification.logo}
+                            alt={`${certification.issuer} logo`}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+
+                        <span className="text-sm font-medium text-[var(--accent)]">
+                          {certification.issuer}
+                        </span>
+                      </div>
+
+                      <h3 className="mt-4 text-xl font-semibold leading-7 text-white">
+                        {certification.title}
+                      </h3>
+
+                      <div className="mt-2 text-sm text-[var(--secondary-text)]">
+                        Issued on: {certification.date}
+                      </div>
+
+                      {certification.description && (
+                        <p className="mt-4 text-sm leading-6 text-[var(--secondary-text)]">
+                          {certification.description}
+                        </p>
+                      )}
+
+                      <div className="mt-auto flex flex-wrap gap-3 pt-6">
+                        {certification.pdfUrl && (
+                          <a
+                            href={certification.pdfUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-2 rounded-[9px] bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
+                          >
+                            View Certificate ↗
+                          </a>
+                        )}
+
+                        {certification.linkedinUrl && (
+                          <a
+                            href={certification.linkedinUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-2 rounded-[9px] border border-[#8B5CF6]/40 bg-[#8B5CF6]/10 px-3 py-2 text-sm font-semibold text-[#C4B5FD] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#8B5CF6] hover:bg-[#8B5CF6]/20"
+                          >
+                            LinkedIn ↗
+                          </a>
+                        )}
+                      </div>
                     </div>
-
-                    <span className="text-sm font-medium text-[var(--accent)]">
-                      {certification.issuer}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-4 text-xl font-semibold leading-7 text-white">
-                    {certification.title}
-                  </h3>
-
-                  <div className="mt-2 text-sm text-[var(--secondary-text)]">
-                    Issued on: {certification.date}
-                  </div>
-
-                  {certification.description && (
-                    <p className="mt-4 text-sm leading-6 text-[var(--secondary-text)]">
-                      {certification.description}
-                    </p>
-                  )}
-
-                  <div className="mt-auto flex flex-wrap gap-3 pt-6">
-                    {certification.pdfUrl && (
-                      <a
-                        href={certification.pdfUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-[9px] bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
-                      >
-                        View Certificate ↗
-                      </a>
-                    )}
-
-                    {certification.linkedinUrl && (
-                      <a
-                        href={certification.linkedinUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-[9px] border border-[#8B5CF6]/40 bg-[#8B5CF6]/10 px-3 py-2 text-sm font-semibold text-[#C4B5FD] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#8B5CF6] hover:bg-[#8B5CF6]/20"
-                      >
-                        LinkedIn ↗
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
+                  ),
+                )}
+              </div>
             </div>
+            {/* Mobile certifications: stacked full-width cards, no arrows. */}
+            <div className="-mx-4 flex flex-col gap-5 px-4 md:hidden">
+              {certifications
+                .slice(0, showAllCertifications ? certifications.length : 3)
+                .map((certification) => (
+                  <div
+                    key={certification.title}
+                    className="flex min-h-[380px] flex-col overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] p-5"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white p-1.5">
+                        <img
+                          src={certification.logo}
+                          alt={`${certification.issuer} logo`}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                      <span className="text-sm font-medium text-[var(--accent)]">
+                        {certification.issuer}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-xl font-semibold leading-7 text-white">
+                      {certification.title}
+                    </h3>
+                    <div className="mt-2 text-sm text-[var(--secondary-text)]">
+                      Issued on: {certification.date}
+                    </div>
+                    {certification.description && (
+                      <p className="mt-4 text-sm leading-6 text-[var(--secondary-text)]">
+                        {certification.description}
+                      </p>
+                    )}
+                    <div className="mt-auto flex flex-wrap gap-3 pt-6">
+                      {certification.pdfUrl && (
+                        <a
+                          href={certification.pdfUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-[9px] bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white"
+                        >
+                          View Certificate ↗
+                        </a>
+                      )}
+                      {certification.linkedinUrl && (
+                        <a
+                          href={certification.linkedinUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-[9px] border border-[#8B5CF6]/40 bg-[#8B5CF6]/10 px-3 py-2 text-sm font-semibold text-[#C4B5FD]"
+                        >
+                          LinkedIn ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+            {certifications.length > 3 && !showAllCertifications && (
+              <div className="mt-2 flex justify-end md:hidden">
+                <button
+                  type="button"
+                  onClick={() => setShowAllCertifications(true)}
+                  className="inline-flex items-center gap-2 rounded-[8px] border border-[#F59E0B] bg-[#F59E0B] px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#D97706]"
+                >
+                  View More Certificates →
+                </button>
+              </div>
+            )}
             {/* Right Arrow */}
             <button
               type="button"
@@ -860,12 +993,12 @@ function App() {
                 )
               }
               aria-label="Next certification"
-              className="absolute right-[-0.5rem] sm:right-[-2.5rem] top-1/2 z-10 flex h-10 w-10 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-lg text-white shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="absolute right-[-0.5rem] sm:right-[-2.5rem] top-1/2 z-10 hidden h-10 w-10 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-lg text-[var(--primary-text)] shadow-lg transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)] md:flex"
             >
               →
             </button>
             {/* Carousel Dots */}
-            <div className="mt-6 flex justify-center gap-2">
+            <div className="mt-6 hidden justify-center gap-2 md:flex">
               {certificationSlides.map((_, index) => (
                 <button
                   key={index}
