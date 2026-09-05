@@ -4,6 +4,7 @@ import interviewPrepImage from "./assets/interviewprep-ai.webp";
 import learnifyImage from "./assets/learnify.webp";
 import vtuLogo from "./assets/vtu_logo.webp";
 import resendIcon from "./assets/resend_icon.webp";
+import profilePhoto from "./assets/profile-photo.png";
 import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import { FiArrowDownRight, FiGithub } from "react-icons/fi";
 import {
@@ -538,10 +539,16 @@ function App() {
 
             <Reveal className="relative overflow-hidden rounded-[14px] border border-[var(--border)] bg-[var(--surface)] px-6 py-6 shadow-[0_14px_50px_-28px_rgba(0,0,0,0.9)]">
               <div className="flex flex-col items-center justify-center rounded-[14px] border border-[var(--border)] bg-[linear-gradient(135deg,rgba(62,123,250,0.14),rgba(167,139,250,0.10))] p-6 sm:p-8">
-                <div className="flex aspect-square w-[280px] items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-[var(--surface)] sm:w-[300px]">
-                  <span className="text-center text-[10px] uppercase tracking-[0.22em] text-[var(--secondary-text)]">
-                    Profile Photo
-                  </span>
+                <div className="profile-photo-wrapper">
+                  <div className="profile-photo-glow" />
+
+                  <div className="profile-photo">
+                    <img
+                      src={profilePhoto}
+                      alt="Sarah D'Almeida"
+                      className="h-full w-full object-cover object-[center_20%]"
+                    />
+                  </div>
                 </div>
                 <div className="mt-6 text-center">
                   <h2 className="text-[clamp(1.6rem,2vw,2rem)] font-bold leading-none text-white">
@@ -700,7 +707,6 @@ function App() {
                 </Reveal>
               ))}
             </div>
-           
             {/* Mobile projects: stacked full-width cards, no arrows. */}
             <div className="-mx-4 flex flex-col gap-6 px-4 pb-4 md:hidden">
               {projectEntries
